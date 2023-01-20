@@ -1,5 +1,6 @@
 package ru.netology;
 
+import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,8 +23,8 @@ public class BankCardOrderTest {
 
     @BeforeAll
     static void setupAll() {
-//        System.setProperty("webdriver.chrome.driver", "driver/win/chromedriver.exe"); // вариант без headless
         WebDriverManager.chromedriver().setup();
+//        driver.get("http://localhost:9999/");
     }
 
     @BeforeEach
@@ -33,7 +34,7 @@ public class BankCardOrderTest {
         options.addArguments("--no-sandbox");
         options.addArguments("--headless");
         driver = new ChromeDriver(options);
-//        driver = new ChromeDriver(); // вариант без headless
+        driver.get("http://localhost:9999/");
     }
 
     @AfterEach
@@ -44,7 +45,6 @@ public class BankCardOrderTest {
 
     @Test
     void test() {
-        driver.get("http://localhost:9999/");
         List<WebElement> elements = driver.findElements(By.className("input__control"));
         elements.get(0).sendKeys("Иван Иванов");
         elements.get(1).sendKeys("+79099095555");
@@ -56,9 +56,9 @@ public class BankCardOrderTest {
 
     @Test
     void testWithSelector() {
-        driver.get("http://localhost:9999/");
-        driver.findElement(By.cssSelector("[type=\"text\"]")).sendKeys("Иван Иванов");
-        driver.findElement(By.cssSelector("[type=\"tel\"]")).sendKeys("+79099095555");
+        Configuration.holdBrowserOpen = true;
+        driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Иван Петров-Иванов");
+        driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79099095555");
         driver.findElement(By.cssSelector(".checkbox__box")).click();
         driver.findElement(By.cssSelector(".button__text")).click();
         String text = driver.findElement(By.className("paragraph")).getText();
