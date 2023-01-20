@@ -1,6 +1,5 @@
 package ru.netology;
 
-import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +23,6 @@ public class BankCardOrderTest {
     @BeforeAll
     static void setupAll() {
         WebDriverManager.chromedriver().setup();
-//        driver.get("http://localhost:9999/");
     }
 
     @BeforeEach
@@ -56,7 +54,6 @@ public class BankCardOrderTest {
 
     @Test
     void testWithSelector() {
-        Configuration.holdBrowserOpen = true;
         driver.findElement(By.cssSelector("[data-test-id='name'] input")).sendKeys("Иван Петров-Иванов");
         driver.findElement(By.cssSelector("[data-test-id='phone'] input")).sendKeys("+79099095555");
         driver.findElement(By.cssSelector(".checkbox__box")).click();
